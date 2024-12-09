@@ -1,0 +1,8 @@
+:schedule:
+  daily_report:
+    cron: "0 0 * * *"
+    class: "DailyReportWorker"
+
+:concurrency: 5
+:queues:
+  - default
