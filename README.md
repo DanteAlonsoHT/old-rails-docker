@@ -132,6 +132,9 @@ Response:
 
 ### Products Endpoints
 
+Consider check the [POSTMAN file](https://github.com/DanteAlonsoHT/old-rails-docker/blob/main/Test%20Técnico%20PuntosPoint.postman_collection.json) to see the exported version of API calls for the 5 endpoints.
+
+
 - [x] Most Purchased Products by Category:
 
 ```
