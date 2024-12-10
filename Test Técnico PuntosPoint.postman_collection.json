@@ -1,0 +1,237 @@
+{
+	"info": {
+		"_postman_id": "a6541dba-2579-4fe8-8a83-6529b9173ecc",
+		"name": "Test Técnico PuntosPoint",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18341567"
+	},
+	"item": [
+		{
+			"name": "Admin Session JWT",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();",
+							"if (response.token) {",
+							"  pm.environment.set(\"auth_token\", response.token);",
+							"}",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/sessions?email=admin1@admin.com&password=admin123",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"sessions"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "admin1@admin.com"
+						},
+						{
+							"key": "password",
+							"value": "admin123"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Most Purchased By Category",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_test_url}}/api/products/most_purchased_by_category",
+					"host": [
+						"{{base_test_url}}"
+					],
+					"path": [
+						"api",
+						"products",
+						"most_purchased_by_category"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Top Earnings by Category",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_test_url}}/api/products/top_earning_by_category",
+					"host": [
+						"{{base_test_url}}"
+					],
+					"path": [
+						"api",
+						"products",
+						"top_earning_by_category"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Filtered Purchases",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_test_url}}/api/purchases?customer_id[]=25",
+					"host": [
+						"{{base_test_url}}"
+					],
+					"path": [
+						"api",
+						"purchases"
+					],
+					"query": [
+						{
+							"key": "from",
+							"value": "2024-11-29",
+							"disabled": true
+						},
+						{
+							"key": "to",
+							"value": "2024-11-25",
+							"disabled": true
+						},
+						{
+							"key": "category_id[]",
+							"value": "5",
+							"disabled": true
+						},
+						{
+							"key": "category_id[]",
+							"value": "10",
+							"disabled": true
+						},
+						{
+							"key": "customer_id[]",
+							"value": "25"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Purchases Amount by Granularity",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_test_url}}/api/purchases/count_by_granularity?from=2023-01-01&to=2023-12-31&category_id[]=1&admin_id[]=2&granularity=day",
+					"host": [
+						"{{base_test_url}}"
+					],
+					"path": [
+						"api",
+						"purchases",
+						"count_by_granularity"
+					],
+					"query": [
+						{
+							"key": "from",
+							"value": "2023-01-01"
+						},
+						{
+							"key": "to",
+							"value": "2023-12-31"
+						},
+						{
+							"key": "category_id[]",
+							"value": "1"
+						},
+						{
+							"key": "admin_id[]",
+							"value": "2"
+						},
+						{
+							"key": "customer_id[]",
+							"value": "6",
+							"disabled": true
+						},
+						{
+							"key": "granularity",
+							"value": "day"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "base_test_url",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "auth_token",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
