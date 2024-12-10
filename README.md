@@ -82,17 +82,28 @@ docker-compose build
 docker-compose up
 ```
 
-3.	Run Database Migrations
+3.	[OPTIONAL] Run Database Migrations (just in case, migration are not applied automatically after the previous commands)
 Inside the running container, run:
 
 ```bash
-docker-compose exec app rake db:create db:migrate db:seed
+docker-compose exec app rake db:create db:migrate
 ```
 
 4.	Access the Application
 
 The API server will be running at http://localhost:3000.
 
+5. Run the seeds
+
+```bash
+docker-compose exec app rake db:seed
+```
+
+5. Run the Rspec test
+
+```bash
+docker-compose exec app rspec
+```
 ## API Endpoints
 
 ### Authentication
@@ -159,14 +170,6 @@ Sales Report:
 
 First Purchase Email:
 - [x] Sends an email to administrators when a product is purchased for the first time.
-
-Testing
-
-Run the RSpec test suite to validate the application:
-
-```bash
-docker-compose exec app rspec
-```
 
 ### Database Structure
 
