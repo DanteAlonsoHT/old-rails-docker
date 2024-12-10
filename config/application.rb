@@ -1,13 +1,13 @@
 require File.expand_path('../boot', __FILE__)
 
-#require 'bundler/setup'
+# require 'bundler/setup'
 require 'rails/all'
 
 Bundler.require(:default, Rails.env)
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
-  Bundler.require(*Rails.groups(:assets => %w(development test)))
+  Bundler.require(*Rails.groups(assets: %w(development test)))
   # If you want your assets lazily compiled in production, use this line
   # Bundler.require(:default, :assets, Rails.env)
 end
@@ -37,7 +37,7 @@ module MyApp
     # config.i18n.default_locale = :de
 
     # Configure the default encoding used in templates for Ruby 1.9.
-    config.encoding = "utf-8"
+    config.encoding = 'utf-8'
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]

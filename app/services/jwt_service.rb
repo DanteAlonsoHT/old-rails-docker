@@ -4,7 +4,7 @@ class JwtService
   end
 
   def self.decode(token)
-    body, = JWT.decode(token, JWT_SECRET, true, { algorithm: 'HS256' })
+    body, = JWT.decode(token, JWT_SECRET, true, algorithm: 'HS256')
     body
   rescue JWT::DecodeError
     nil

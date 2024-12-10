@@ -1,7 +1,7 @@
 namespace :db do
-  desc "Reset database to a clean state and reapply seeds"
+  desc 'Reset database to a clean state and reapply seeds'
   task reset: :environment do
-    puts "Resetting database..."
+    puts 'Resetting database...'
     AuditLog.delete_all
     Purchase.delete_all
     ProductImage.delete_all
@@ -10,6 +10,6 @@ namespace :db do
     Product.delete_all
     Customer.delete_all
     Administrator.delete_all
-    puts "Database cleared!"
+    puts 'Database cleared!'
   end
 end

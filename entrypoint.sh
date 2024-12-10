@@ -2,13 +2,13 @@
 
 set -e
 
-# Verifica si la base de datos ya existe
-if ! PGPASSWORD=$DATABASE_PASSWORD psql -U $DATABASE_USER -h $DATABASE_HOST -c '\l' | grep -q $DATABASE_NAME; then
+# Verify if database already exists
+if ! PGPASSWORD=$DATABASE_PASSWORD psql -U $DATABASE_USER -h $DATABASE_HOST -tc "SELECT 1 FROM pg_database WHERE datname = '$DATABASE_NAME'" | grep -q 1; then
   echo "Database not found. Creating..."
   bundle exec rake db:create db:migrate
 else
   echo "Database already exists. Skipping creation."
 fi
 
-# Ejecuta el comando por defecto
+# Execute default command
 exec "$@"

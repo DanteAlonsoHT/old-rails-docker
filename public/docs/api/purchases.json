@@ -1,0 +1,150 @@
+{
+  "apiVersion": "1.0",
+  "swaggerVersion": "1.2",
+  "basePath": "http://localhost:3000",
+  "resourcePath": "purchases",
+  "apis": [
+    {
+      "path": "/api/purchases/count_by_granularity",
+      "operations": [
+        {
+          "summary": "Get the number of purchases grouped by granularity",
+          "notes": "Returns a summary of purchases by hour, day, week, or year for use in graphs",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "JWT authentication token",
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "granularity",
+              "type": "string",
+              "description": "Granularity (hour, day, week, year)",
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "from",
+              "type": "string",
+              "description": "Start date (YYYY-MM-DD)",
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "to",
+              "type": "string",
+              "description": "End date (YYYY-MM-DD)",
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "category_id",
+              "type": "string",
+              "description": "Category ID(s) (supports multiple)",
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "customer_id",
+              "type": "string",
+              "description": "Customer ID(s) (supports multiple)",
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "admin_id",
+              "type": "string",
+              "description": "Administrator ID(s) (supports multiple)",
+              "required": false
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 200,
+              "responseModel": null,
+              "message": "Successful response"
+            },
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "Unauthorized access"
+            }
+          ],
+          "nickname": "Api::Purchases#count_by_granularity",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/api/purchases",
+      "operations": [
+        {
+          "summary": "Get a list of purchases with dynamic filters",
+          "notes": "Returns a list based on filters such as date range, categories, customer, and administrator",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "JWT authentication token",
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "from",
+              "type": "string",
+              "description": "Start date (YYYY-MM-DD)",
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "to",
+              "type": "string",
+              "description": "End date (YYYY-MM-DD)",
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "category_id",
+              "type": "string",
+              "description": "Category ID(s) (supports multiple)",
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "customer_id",
+              "type": "string",
+              "description": "Customer ID(s) (supports multiple)",
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "admin_id",
+              "type": "string",
+              "description": "Administrator ID(s) (supports multiple)",
+              "required": false
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 200,
+              "responseModel": null,
+              "message": "Successful response"
+            },
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "Unauthorized access"
+            }
+          ],
+          "nickname": "Api::Purchases#index",
+          "method": "get"
+        }
+      ]
+    }
+  ],
+  "authorizations": null
+}

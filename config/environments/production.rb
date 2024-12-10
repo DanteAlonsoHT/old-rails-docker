@@ -66,15 +66,17 @@ MyApp::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address:              'smtp.gmail.com',
-    port:                 587,
-    domain:               'gmail.com',
-    user_name:            'operacionesvm45@gmail.com',
-    password:             'dbrmzzrvfbmowmby',
-    authentication:       'plain',
-    enable_starttls_auto: true
+    address:              ENV['SMTP_ADDRESS'],
+    port:                 ENV['SMTP_PORT'].to_i, # Convertir a entero
+    domain:               ENV['SMTP_DOMAIN'],
+    user_name:            ENV['SMTP_USER_NAME'],
+    password:             ENV['SMTP_PASSWORD'],
+    authentication:       ENV['SMTP_AUTHENTICATION'],
+    enable_starttls_auto: ENV['SMTP_ENABLE_STARTTLS_AUTO'] == 'true' # Convertir a booleano
   }
 
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
+
+  config.cache_store = :redis_store, "#{ENV['REDIS_URL']}/cache", { expires_in: 90.minutes }
 end

@@ -5,5 +5,5 @@ class AuditLog < ActiveRecord::Base
   belongs_to :administrator
 
   validates :auditable_type, :auditable_id, :administrator_id, presence: true
-  validates :change_data, length: { maximum: 5000 }
+  validates :change_data, length: { maximum: 5000 }, presence: true
 end

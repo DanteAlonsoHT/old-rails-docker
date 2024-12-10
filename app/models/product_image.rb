@@ -4,5 +4,5 @@ class ProductImage < ActiveRecord::Base
   belongs_to :product
 
   validates :product_id, presence: true
-  validates :image_url, presence: true, format: { with: URI::regexp(%w(http https)) }
+  validates :image_url, presence: true, format: { with: URI.regexp(%w(http https)) }
 end

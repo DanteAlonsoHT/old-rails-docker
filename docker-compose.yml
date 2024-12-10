@@ -12,13 +12,9 @@ services:
     depends_on:
       - db
       - redis
-    environment:
-      DATABASE_HOST: db
-      DATABASE_USER: appuser
-      DATABASE_PASSWORD: password
-      DATABASE_NAME: appdb
-      REDIS_URL: redis://redis:6379/0
-      DATABASE_URL: postgres://appuser:password@db:5432/ecommerce_puntospoint_development
+      - sidekiq
+    env_file:
+      - .env
     stdin_open: true
     tty: true
 
@@ -26,10 +22,8 @@ services:
     image: postgres:9.6
     ports:
       - "5432:5432"
-    environment:
-      POSTGRES_USER: appuser
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: appdb
+    env_file:
+      - .env
     volumes:
       - pg_data:/var/lib/postgresql/data
   
@@ -39,37 +33,17 @@ services:
     ports:
       - "6380:6379"
 
-  resque_web:
+  sidekiq:
     build:
       context: .
-      dockerfile: Dockerfile
-    command: bundle exec rails server -b 0.0.0.0 -p 3001
-    ports:
-      - "3001:3001"
-    environment:
-      REDIS_URL: redis://redis:6379/0
-    depends_on:
-      - redis
-      - db
-      - resque_worker
-
-  resque_worker:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: bundle exec rake resque:work QUEUE=* --trace
-    environment:
-      REDIS_URL: redis://redis:6379/0
-      DATABASE_URL: postgres://appuser:password@db:5432/ecommerce_puntospoint_development
-      DATABASE_HOST: db
-      DATABASE_USER: appuser
-      DATABASE_PASSWORD: password
-      DATABASE_NAME: appdb
-    depends_on:
-      - redis
-      - db
+    command: bundle exec sidekiq
     volumes:
       - .:/app
+    depends_on:
+      - redis
+      - db
+    env_file:
+      - .env
 
 volumes:
   pg_data:

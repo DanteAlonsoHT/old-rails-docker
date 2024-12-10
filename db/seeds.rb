@@ -6,6 +6,10 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+ENV['SKIP_EMAILS'] = 'true'
+Category.audit_enabled = false
+Product.audit_enabled = false
+
 AuditLog.delete_all
 Purchase.delete_all
 ProductImage.delete_all
@@ -15,17 +19,19 @@ Product.delete_all
 Customer.delete_all
 Administrator.delete_all
 
-puts "Creating administrators..."
+puts 'Creating administrators...'
 admins = []
 5.times do |i|
-  admins << Administrator.create!(
+  admin = Administrator.new(
     email: "admin#{i + 1}@example.com",
-    name: "Admin #{i + 1}",
-    password: "password"
+    name: "Admin #{i + 1}"
   )
+  admin.password = 'password'
+  admin.save!
+  admins << admin
 end
 
-puts "Creating categories..."
+puts 'Creating categories...'
 categories = []
 10.times do |i|
   creator = admins.sample
@@ -37,7 +43,7 @@ categories = []
   )
 end
 
-puts "Creating products..."
+puts 'Creating products...'
 products = []
 25.times do |i|
   creator = admins.sample
@@ -57,7 +63,7 @@ products = []
   products << product
 end
 
-puts "Creating product images..."
+puts 'Creating product images...'
 products.each do |product|
   rand(1..3).times do |i|
     ProductImage.create!(
@@ -67,7 +73,7 @@ products.each do |product|
   end
 end
 
-puts "Creating customers..."
+puts 'Creating customers...'
 customers = []
 20.times do |i|
   customers << Customer.create!(
@@ -76,7 +82,7 @@ customers = []
   )
 end
 
-puts "Creating purchases..."
+puts 'Creating purchases...'
 customers.each do |customer|
   rand(1..10).times do
     product = products.sample
@@ -89,15 +95,19 @@ customers.each do |customer|
   end
 end
 
-puts "Creating audit logs..."
+puts 'Creating audit logs...'
 products.each do |product|
   admin = admins.sample
   AuditLog.create!(
-    auditable_type: "Product",
+    auditable_type: 'Product',
     auditable_id: product.id,
     administrator_id: admin.id,
     change_data: "Product '#{product.name}' was updated by #{admin.name}."
   )
 end
 
-puts "Seeding completed successfully!"
+Category.audit_enabled = true
+Product.audit_enabled = true
+ENV['SKIP_EMAILS'] = 'false'
+
+puts 'Seeding completed successfully!'

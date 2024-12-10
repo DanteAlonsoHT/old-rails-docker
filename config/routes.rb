@@ -55,19 +55,17 @@ MyApp::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
-  require 'resque/server'
-  mount Resque::Server.new, at: '/resque'
 
   namespace :api do
-    resource :sessions, only: [:create] # Para autenticación JWT
-  
+    resource :sessions, only: [:create]
+
     resources :products, only: [] do
       collection do
         get :most_purchased_by_category
         get :top_earning_by_category
       end
     end
-  
+
     resources :purchases, only: [:index] do
       collection do
         get :count_by_granularity
